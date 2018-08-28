@@ -1,29 +1,29 @@
 let global : any = typeof window !== 'undefined' ? window : self;
 global.config = {
-	apiUrl:typeof window !== 'undefined' && window.location ? window.location.href.substr(0,window.location.href.lastIndexOf('/')+1)+'api/' : 'https://www.masariwallet.com/api/',
-	mainnetExplorerUrl: "https://msrchain.net/",
-	testnetExplorerUrl: "http://testnet.msrchain.net/",
+	apiUrl:typeof window !== 'undefined' && window.location ? window.location.href.substr(0,window.location.href.lastIndexOf('/')+1)+'api/' : 'https://www.turtle.land/api/',
+	mainnetExplorerUrl: "https://turtle.land",
+	testnetExplorerUrl: "https://explorer.turtlecoin.lol/",
 	testnet: false,
-	coinUnitPlaces: 12,
-	txMinConfirms: 10,         // corresponds to CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE in Monero
-	txCoinbaseMinConfirms: 60, // corresponds to CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW in Monero
-	addressPrefix: 28,
-	integratedAddressPrefix: 29,
-	addressPrefixTestnet: 33,
-	integratedAddressPrefixTestnet: 34,
-	subAddressPrefix: 52,
-	subAddressPrefixTestnet: 73,
-	feePerKB: new JSBigInt('400000000'),//20^10 - for testnet its not used, as fee is dynamic.
-	dustThreshold: new JSBigInt('1000000000'),//10^10 used for choosing outputs/change - we decompose all the way down if the receiver wants now regardless of threshold
-	defaultMixin: 12, // default value mixin
+	coinUnitPlaces: 2,
+	txMinConfirms: 60,         // corresponds to CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE in Monero
+	txCoinbaseMinConfirms: 120, // corresponds to CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW in Monero
+	addressPrefix: 3914525,
+	integratedAddressPrefix: 3914525,
+	addressPrefixTestnet: 3914525,
+	integratedAddressPrefixTestnet: 3914525,
+	subAddressPrefix: 3914525,
+	subAddressPrefixTestnet: 3914525,
+	feePerKB: new JSBigInt('100'),//20^10 - for testnet its not used, as fee is dynamic.
+	dustThreshold: new JSBigInt('1'),//10^10 used for choosing outputs/change - we decompose all the way down if the receiver wants now regardless of threshold
+	defaultMixin: 7, // default value mixin
 
 	idleTimeout: 30,
 	idleWarningDuration: 20,
 
-	coinSymbol: 'MSR',
-	openAliasPrefix: "msr",
-	coinName: 'Masari',
-	coinUriPrefix: 'masari:',
-	avgBlockTime: 120,
+	coinSymbol: 'TRTL',
+	openAliasPrefix: "trtl",
+	coinName: 'TurtleCoin',
+	coinUriPrefix: 'turtlecoin:',
+	avgBlockTime: 30,
 	maxBlockNumber: 500000000,
 };

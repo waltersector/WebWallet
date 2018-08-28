@@ -18,7 +18,7 @@ import {VueRequireFilter, VueVar, VueWatched} from "../lib/numbersLab/VueAnnotat
 import {TransactionsExplorer} from "../model/TransactionsExplorer";
 import {WalletRepository} from "../model/WalletRepository";
 import {BlockchainExplorerRpc2, WalletWatchdog} from "../model/blockchain/BlockchainExplorerRpc2";
-import {Autowire, DependencyInjectorInstance} from "../lib/numbersLab/DependencyInjector";
+import {DependencyInjectorInstance} from "../lib/numbersLab/DependencyInjector";
 import {Constants} from "../model/Constants";
 import {Wallet} from "../model/Wallet";
 import {BlockchainExplorer} from "../model/blockchain/BlockchainExplorer";
@@ -28,7 +28,6 @@ import {QRReader} from "../model/QRReader";
 import {AppState} from "../model/AppState";
 import {BlockchainExplorerProvider} from "../providers/BlockchainExplorerProvider";
 import {VueFilterPiconero} from "../filters/Filters";
-import {NdefMessage, Nfc} from "../model/Nfc";
 
 let wallet: Wallet = DependencyInjectorInstance().getInstance(Wallet.name, 'default', false);
 let blockchainExplorer: BlockchainExplorerRpc2 = BlockchainExplorerProvider.getInstance();
@@ -52,14 +51,9 @@ class SendView extends DestructableView {
 	@VueVar(true) openAliasValid !: boolean;
 
 	@VueVar(false) qrScanning !: boolean;
-	@VueVar(false) nfcAvailable !: boolean;
-
-	@Autowire(Nfc.name) nfc !: Nfc;
 
 	qrReader: QRReader | null = null;
 	redirectUrlAfterSend: string | null = null;
-
-	ndefListener : ((data: NdefMessage)=>void)|null = null;
 
 	constructor(container: string) {
 		super(container);
@@ -73,8 +67,6 @@ class SendView extends DestructableView {
 		if (destinationName !== null) this.txDestinationName = destinationName.substr(0, 256);
 		if (description !== null) this.txDescription = description.substr(0, 256);
 		if (redirect !== null) this.redirectUrlAfterSend = decodeURIComponent(redirect);
-
-		this.nfcAvailable = this.nfc.has;
 	}
 
 	reset() {
@@ -93,35 +85,6 @@ class SendView extends DestructableView {
 		this.stopScan();
 	}
 
-	startNfcScan(){
-		let self = this;
-		if(this.ndefListener === null) {
-			this.ndefListener = function (data: NdefMessage) {
-				if (data.text)
-					self.handleScanResult(data.text.content);
-				swal.close();
-			};
-			this.nfc.listenNdef(this.ndefListener);
-			swal({
-				title:  i18n.t('sendPage.waitingNfcModal.title'),
-				html: i18n.t('sendPage.waitingNfcModal.content'),
-				onOpen: () => {
-					swal.showLoading();
-				},
-				onClose: () => {
-					this.stopNfcScan();
-				}
-			}).then((result : any) => {
-			});
-		}
-	}
-
-	stopNfcScan(){
-		if(this.ndefListener !== null)
-			this.nfc.removeNdef(this.ndefListener);
-		this.ndefListener = null;
-	}
-
 	initQr() {
 		this.stopScan();
 		this.qrReader = new QRReader();
@@ -130,8 +93,8 @@ class SendView extends DestructableView {
 
 	startScan() {
 		let self = this;
-		if(typeof window.QRScanner !== 'undefined') {
-			window.QRScanner.scan(function(err : any, result : any){
+		if(typeof (<any>window).QRScanner !== 'undefined') {
+			(<any>window).QRScanner.scan(function(err : any, result : any){
 				if (err) {
 					if(err.name === 'SCAN_CANCELED'){
 
@@ -143,7 +106,7 @@ class SendView extends DestructableView {
 				}
 			});
 
-			window.QRScanner.show();
+			(<any>window).QRScanner.show();
 			$('body').addClass('transparent');
 			$('#appContent').hide();
 			$('#nativeCameraPreview').show();
@@ -194,11 +157,11 @@ class SendView extends DestructableView {
 	}
 
 	stopScan() {
-		if(typeof window.QRScanner !== 'undefined') {
-			window.QRScanner.cancelScan(function(status:any){
+		if(typeof (<any>window).QRScanner !== 'undefined') {
+			(<any>window).QRScanner.cancelScan(function(status:any){
 				console.log(status);
 			});
-			window.QRScanner.hide();
+			(<any>window).QRScanner.hide();
 			$('body').removeClass('transparent');
 			$('#appContent').show();
 			$('#nativeCameraPreview').hide();
@@ -215,7 +178,6 @@ class SendView extends DestructableView {
 
 	destruct(): Promise<void> {
 		this.stopScan();
-		this.stopNfcScan();
 		return super.destruct();
 	}
 

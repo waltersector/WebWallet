@@ -13,43 +13,45 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-export type UserKeys = {
-	pub:{
-		view:string,
-		spend:string,
-	},
-	priv:{
-		spend:string,
-		view:string
-	}
-}
+export class Url{
 
-export class KeysRepository{
-
-	static get() : UserKeys|null{
-		return null;
-		// let raw = window.localStorage.getItem('userKeys');
-		// if(raw === null)return null;
-		// return JSON.parse(raw);
-	}
-
-	static fromPriv(spend : string, view : string) : UserKeys{
-		let pubView = cnUtil.sec_key_to_pub(view);
-		let pubSpend = cnUtil.sec_key_to_pub(spend);
-		return {
-			pub:{
-				view:pubView,
-				spend:pubSpend
-			},
-			priv:{
-				view:view,
-				spend:spend,
-			}
+	private static transformSearchParametersToAssocArray(prmstr:any) {
+		let params : any = {};
+		let prmarr = prmstr.split("&");
+		for (let i = 0; i < prmarr.length; i++) {
+			let tmparr = prmarr[i].split("=");
+			if(typeof params[tmparr[0]] !== 'undefined'){
+				if(!Array.isArray(params[tmparr[0]]))
+					params[tmparr[0]] = [params[tmparr[0]]];
+				params[tmparr[0]].push(tmparr[1]);
+			}else
+				params[tmparr[0]] = tmparr[1];
 		}
+		return params;
 	}
 
-	static save(keys : UserKeys){
-		window.localStorage.setItem('userKeys', JSON.stringify(keys));
+	static getSearchParameters() {
+		let paramsStart = window.location.href.indexOf('?');
+		if (paramsStart != -1) {
+			let paramsEnd = window.location.href.indexOf('#', paramsStart);
+			paramsEnd = paramsEnd == -1 ? window.location.href.length : paramsEnd;
+			return Url.transformSearchParametersToAssocArray(window.location.href.substring(paramsStart + 1, paramsEnd));
+		}
+		return {};
 	}
 
+	static getHashSearchParameters() {
+		let paramsStart = window.location.hash.indexOf('?');
+		if (paramsStart != -1) {
+			return Url.transformSearchParametersToAssocArray(window.location.hash.substring(paramsStart + 1, window.location.hash.length));
+		}
+		return {};
+	}
+
+	static getHashSearchParameter(parameterName : string, defaultValue : any = null) {
+		let parameters = this.getHashSearchParameters();
+		if(typeof parameters[parameterName] !== 'undefined')
+			return parameters[parameterName];
+		return defaultValue;
+	}
 }

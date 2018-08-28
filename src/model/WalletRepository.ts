@@ -15,14 +15,10 @@
 
 import {RawWallet, Wallet} from "./Wallet";
 import {CoinUri} from "./CoinUri";
-import {Storage} from "./Storage";
 
 export class WalletRepository{
-
-	static hasOneStored() : Promise<boolean>{
-		return Storage.getItem('wallet', null).then(function (wallet : any) {
-			return wallet !== null;
-		});
+	static hasOneStored(){
+		return window.localStorage.getItem('wallet') !== null;
 	}
 	
 	static getWithPassword(rawWallet : RawWallet, password : string) : Wallet|null{
@@ -43,23 +39,18 @@ export class WalletRepository{
 		return Wallet.loadFromRaw(rawWallet);
 	}
 
-	static getLocalWalletWithPassword(password : string) : Promise<Wallet|null>{
-		return Storage.getItem('wallet', null).then((existingWallet : any) => {
-			console.log(existingWallet);
-			if(existingWallet !== null){
-				console.log(JSON.parse(existingWallet));
-				let wallet : Wallet|null = this.getWithPassword(JSON.parse(existingWallet), password);
-				console.log(wallet);
-				return wallet;
-			}else{
-				return null;
-			}
-		});
+	static getLocalWalletWithPassword(password : string) : Wallet|null{
+		let existingWallet = window.localStorage.getItem('wallet');
+		if(existingWallet !== null){
+			return this.getWithPassword(JSON.parse(existingWallet), password);
+		}else{
+			return null;
+		}
 	}
 	
-	static save(wallet : Wallet, password : string) : Promise<void>{
+	static save(wallet : Wallet, password : string){
 		let rawWallet = this.getEncrypted(wallet, password);
-		return Storage.setItem('wallet', JSON.stringify(rawWallet));
+		window.localStorage.setItem('wallet', JSON.stringify(rawWallet));
 	}
 
 	static getEncrypted(wallet : Wallet, password : string){
@@ -86,8 +77,8 @@ export class WalletRepository{
 		return rawWallet;
 	}
 
-	static deleteLocalCopy() : Promise<void>{
-		return Storage.remove('wallet');
+	static deleteLocalCopy(){
+		window.localStorage.removeItem('wallet');
 	}
 
 
@@ -155,7 +146,7 @@ export class WalletRepository{
 		doc.setTextColor(255, 255, 255);
 		doc.setFontSize(10);
 		doc.text(110, 120, "To deposit funds to this paper wallet, send ");
-		doc.text(110, 125, "Masari to the public address");
+		doc.text(110, 125, "TRTL to the public address");
 
 		doc.text(110, 135, "DO NOT REVEAL THE PRIVATE KEY");
 
@@ -163,7 +154,7 @@ export class WalletRepository{
 		let c : HTMLCanvasElement|null = <HTMLCanvasElement>document.getElementById('canvasExport');
 		if(c !== null) {
 			let ctx = c.getContext("2d");
-			let img: ImageBitmap | null = <ImageBitmap | null>document.getElementById("verticalMasariLogo");
+			let img: ImageBitmap | null = <ImageBitmap | null>document.getElementById("verticalTurtleLogo");
 			if (ctx !== null && img !== null) {
 				c.width = img.width;
 				c.height = img.height;

@@ -18,14 +18,15 @@ import {DependencyInjectorInstance} from "../lib/numbersLab/DependencyInjector";
 import {Wallet} from "../model/Wallet";
 import {DestructableView} from "../lib/numbersLab/DestructableView";
 import {Constants} from "../model/Constants";
+import {VueFilterDate, VueFilterPiconero} from "../filters/Filters";
 import {AppState} from "../model/AppState";
-import {Transaction, TransactionIn} from "../model/Transaction";
-import {VueFilterPiconero} from "../filters/Filters";
+import {Transaction} from "../model/Transaction";
 
 let wallet : Wallet = DependencyInjectorInstance().getInstance(Wallet.name,'default', false);
 let blockchainExplorer = DependencyInjectorInstance().getInstance(Constants.BLOCKCHAIN_EXPLORER);
 
-@VueRequireFilter('piconero', VueFilterPiconero)
+@VueRequireFilter('date',VueFilterDate)
+@VueRequireFilter('piconero',VueFilterPiconero)
 class AccountView extends DestructableView{
 	@VueVar([]) transactions !: Transaction[];
 	@VueVar(0) walletAmount !: number;
@@ -33,7 +34,8 @@ class AccountView extends DestructableView{
 
 	@VueVar(0) currentScanBlock !: number;
 	@VueVar(0) blockchainHeight !: number;
-	@VueVar(1000000000000) currencyDivider !: number;
+
+	@VueVar(100) currencyDivider !: number;
 
 	intervalRefresh : number = 0;
 
@@ -57,8 +59,18 @@ class AccountView extends DestructableView{
 		blockchainExplorer.getHeight().then(function(height : number){
 			self.blockchainHeight = height;
 		});
+		// self.blockchainHeight = blockchainExplorer.getScannedHeight();
 
-		this.refreshWallet();
+		// if(this.currentScanBlock === 0){
+			this.refreshWallet();
+		// }
+
+		//save wallet if modified
+		// if(wallet.hasBeenModified()){
+		// 	this.refreshWallet();
+			// let walletExported = wallet.exportToRaw();
+			// window.localStorage.setItem('wallet', JSON.stringify(walletExported));
+		// }
 	}
 
 	moreInfoOnTx(transaction : Transaction){

@@ -13,13 +13,12 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {Autowire, DependencyInjectorInstance} from "../lib/numbersLab/DependencyInjector";
+import {DependencyInjectorInstance} from "../lib/numbersLab/DependencyInjector";
 import {Wallet} from "../model/Wallet";
 import {DestructableView} from "../lib/numbersLab/DestructableView";
 import {Constants} from "../model/Constants";
 import {VueVar, VueWatched} from "../lib/numbersLab/VueAnnotate";
 import {CoinUri} from "../model/CoinUri";
-import {Nfc} from "../model/Nfc";
 
 let wallet : Wallet = DependencyInjectorInstance().getInstance(Wallet.name,'default', false);
 
@@ -51,16 +50,9 @@ class AccountView extends DestructableView{
 	@VueVar('') amount !: string;
 	@VueVar('') recipientName !: string;
 	@VueVar('') txDescription !: string;
-	@VueVar(false) hasNfc !: boolean;
-	@VueVar(false) hasWritableNfc !: boolean;
-
-	@Autowire(Nfc.name) nfc !: Nfc;
 
 	constructor(container : string){
 		super(container);
-		this.hasNfc = this.nfc.has;
-		this.hasWritableNfc = this.nfc.writableNfc;
-
 		this.rawAddress = wallet.getPublicAddress();
 		this.address = wallet.getPublicAddress();
 		this.generateQrCode();
@@ -97,100 +89,30 @@ class AccountView extends DestructableView{
 	}
 
 	generateQrCode(){
-		let el = kjua({
-			text: this.getAddressEncoded(),
-			image:document.getElementById('masariQrCodeLogo'),
-			size:300,
-			mode:'image',
-			mSize: 10,
-			mPosX: 50,
-			mPosY: 50,
-		});
-		$('#qrCodeContainer').html(el);
-	}
-
-	private getAddressEncoded() : string{
-		return CoinUri.encodeTx(
+		let address = CoinUri.encodeTx(
 			this.address,
 			this.paymentId !== '' ? this.paymentId : null,
 			this.amount !== '' ? this.amount : null,
 			this.recipientName !== '' ? this.recipientName: null,
 			this.txDescription !== '' ? this.txDescription: null,
 		);
+
+		let el = kjua({
+			text: address,
+			image:document.getElementById('masariQrCodeLogo'),
+			size:300,
+			mode:'image',
+			mSize: 20,
+			mPosX: 50,
+			mPosY: 50,
+		});
+		$('#qrCodeContainer').html(el);
 	}
 
 	setInClipboard(inputId : string = 'rawAddress'){
 		setTextInClipboard(inputId);
 	}
 
-	writeOnNfc(){
-		swal({
-			title: i18n.t('receivePage.waitingNfcToWriteModal.title'),
-			html: i18n.t('receivePage.waitingNfcToWriteModal.content'),
-			onOpen: () => {
-				swal.showLoading();
-			},
-			onClose: () => {
-				this.nfc.cancelWriteNdef();
-			}
-		}).then((result : any) => {
-		});
-
-		this.nfc.writeNdef({
-			lang:'en',
-			content:this.getAddressEncoded()
-		}).then(function(){
-			swal({
-				type:'success',
-				title: i18n.t('receivePage.waitingNfcToWriteModal.titleSuccess'),
-			});
-		}).catch((data :any)=>{
-			if(data === 'tag_capacity'){
-				swal({
-					type:'error',
-					title: i18n.t('receivePage.nfcErrorModal.titleInsufficientCapacity'),
-				})
-			}else {
-				alert('Unknown error:'+JSON.stringify(data));
-				swal.close();
-			}
-			this.nfc.cancelWriteNdef();
-		});
-	}
-
-	shareWithNfc(){
-		swal({
-			title: 'Sharing your payment address',
-			html: 'Bring closer the other device to share your public information',
-			onOpen: () => {
-				swal.showLoading();
-			},
-			onClose: () => {
-				this.nfc.unshareNdef();
-			}
-		}).then((result : any) => {
-		});
-
-		this.nfc.shareNdef({
-			lang:'en',
-			content:this.getAddressEncoded()
-		}).then(()=>{
-			swal({
-				type:'success',
-				title: 'Information shared',
-			});
-			this.nfc.unshareNdef();
-		}).catch(() => {
-			this.nfc.unshareNdef();
-		});
-	}
-
-
-	destruct(): Promise<void> {
-		this.nfc.unshareNdef();
-		this.nfc.cancelWriteNdef();
-		return super.destruct();
-	}
 }
 
 if(wallet !== null)
