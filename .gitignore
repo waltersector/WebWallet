@@ -6,6 +6,7 @@ php_api_src/lastRun.txt
 wwwroot/**/*.js
 wwwroot/**/*.js.map
 !wwwroot/lib/*.js
+!wwwroot/localforage.js
 !wwwroot/lib/**/*.js
 wwwroot/lib/numbersLab/*.js
 wwwroot/lib/numbersLab/*.map
