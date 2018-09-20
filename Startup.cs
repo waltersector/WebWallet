@@ -96,7 +96,6 @@ namespace WebWallet
                 app.UseHsts();
             }
             app.UseResponseCompression();
-            //app.UseHttpsRedirection();
             app.UseFileServer();
             app.UseMvc(routes =>
             {

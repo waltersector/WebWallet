@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
- * Copyright (c) 2018, The TurtleCoin Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -100,17 +100,22 @@ export class WalletWatchdog {
 
     checkMempool(): boolean {
         let self = this;
-        if (this.lastMaximumHeight - this.lastBlockLoading > 1) {//only check memory pool if the user is up to date to ensure outs & ins will be found in the wallet
+        if (this.lastMaximumHeight === 0 || this.lastBlockLoading === -1 || (this.lastMaximumHeight - this.lastBlockLoading > 1)) {//only check memory pool if the user is up to date to ensure outs & ins will be found in the wallet
             return false;
         }
 
         this.wallet.txsMem = [];
+        this.wallet.fusionTxs = [];
         this.explorer.getTransactionPool().then(function (data: any) {
             if (typeof data !== 'undefined')
                 for (let rawTx of data) {
                     let tx = TransactionsExplorer.parse(rawTx, self.wallet);
                     if (tx !== null) {
-                        self.wallet.txsMem.push(tx);
+                        if (tx.isFusionTx()) {
+                            self.wallet.fusionTxs.push(tx);
+                        } else {
+                            self.wallet.txsMem.push(tx);
+                        }
                     }
                 }
         }).catch(function () { });
@@ -161,7 +166,7 @@ export class WalletWatchdog {
         if (this.workerProcessingWorking || !this.workerProcessingReady) {
             return;
         }
-        
+
         //we destroy the worker in charge of decoding the transactions every 250 transactions to ensure the memory is not corrupted
         //cnUtil bug, see https://github.com/mymonero/mymonero-core-js/issues/8
         if (this.workerCountProcessed >= 500) {
@@ -201,7 +206,7 @@ export class WalletWatchdog {
                 self.checkTransactionsInterval();
             }, this.wallet.options.readSpeed);
         }
-        
+
     }
 
 
@@ -210,7 +215,7 @@ export class WalletWatchdog {
 
     loadHistory() {
         if (this.stopped) return;
-        
+
         if (this.lastBlockLoading === -1) this.lastBlockLoading = this.wallet.lastHeight;
         let self = this;
         //don't reload until it's finished processing the last batch of transactions
@@ -236,25 +241,32 @@ export class WalletWatchdog {
                 let previousStartBlock = self.lastBlockLoading;
                 let startBlock = Math.floor(self.lastBlockLoading / 100) * 100;
                 // console.log('=>',self.lastBlockLoading, endBlock, height, startBlock, self.lastBlockLoading);
-                console.log('load block from ' + startBlock);
-                self.explorer.getTransactionsForBlocks(previousStartBlock).then(function (transactions: RawDaemonTransaction[]) {
-                    //to ensure no pile explosion
-                    if (transactions.length > 0) {
-                        let lastTx = transactions[transactions.length - 1];
+                console.log('load block from ' + startBlock + ' (actual block: ' + previousStartBlock + ') at height :' + height);
+                if (previousStartBlock <= height) {
+                    self.explorer.getTransactionsForBlocks(previousStartBlock).then(function (transactions: RawDaemonTransaction[]) {
+                        //to ensure no pile explosion
+                        if (transactions.length > 0) {
+                            let lastTx = transactions[transactions.length - 1];
 
-                        if (typeof lastTx.height !== 'undefined') {
-                            self.lastBlockLoading = lastTx.height + 2; //we're operating one block behind to give the Tx Caching process a chance to catch up
+                            if (typeof lastTx.height !== 'undefined') {
+                                self.lastBlockLoading = lastTx.height + 2; //we're operating one block behind to give the Tx Caching process a chance to catch up
+                            }
                         }
-                    }
-                    self.processTransactions(transactions);
+                        self.processTransactions(transactions);
+                        setTimeout(function () {
+                            self.loadHistory();
+                        }, 1);// then try load history again... 
+                    }).catch(function () {
+                        setTimeout(function () {
+                            self.loadHistory();
+                        }, 30 * 1000);//retry 30s later if an error occurred
+                    });
+                } else {
+                    //if we're on the current height, then only try sync every 30 seconds... 
                     setTimeout(function () {
                         self.loadHistory();
-                    }, 1);// then try load history again... 
-                }).catch(function () {
-                    setTimeout(function () {
-                        self.loadHistory();
-                    }, 30 * 1000);//retry 30s later if an error occurred
-                });
+                    }, 30000);// then try load history again... 
+                }
             } else {
                 setTimeout(function () {
                     self.loadHistory();
@@ -397,7 +409,7 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
                         let globalIndex = output_idx_in_tx;
                         if (typeof tx.global_index_start !== 'undefined')
                             globalIndex += tx.global_index_start;
-                       
+
                         let newOut = {
                             public_key: tx.vout[output_idx_in_tx].key,
                             global_index: globalIndex,
@@ -429,14 +441,14 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
         return new Promise(function (resolve, reject) {
             //console.log('sending:', rawTx);
             $.post(self.serverAddress + 'sendrawtx', { '': rawTx })
-            .done(function (transactions: any) {
-                if (transactions.status && transactions.status == 'OK') {
-                    resolve(transactions);
-                } else
-                    reject(transactions);
-            }).fail(function (data: any) {
-                reject(data);
-            });
+                .done(function (transactions: any) {
+                    if (transactions.status && transactions.status == 'OK') {
+                        resolve(transactions);
+                    } else
+                        reject(transactions);
+                }).fail(function (data: any) {
+                    reject(data);
+                });
         });
     }
 }
