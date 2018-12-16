@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>TurtleCoin Web Wallet</title>
-	<meta property="og:title" content="TurtleCoin Web Wallet" />
+	<title>AryaCoin Web Wallet</title>
+	<meta property="og:title" content="AryaCoin Web Wallet" />
 	<meta property="twitter:title" content="" />
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://wallet.turtlecoin.lol 'unsafe-eval' ; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://mrdigicoin.eu/wallet 'unsafe-eval' ; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
 	<meta name="referrer" content="none">
 	<meta name="msapplication-tap-highlight" content="no">
 
@@ -21,7 +21,7 @@
 	<!-- Add to home screen for Safari on iOS -->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-title" content="TurtleCoin">
+	<meta name="apple-mobile-web-app-title" content="AryaCoin">
 
 	<link rel="icon" href="./assets/img/favicon.ico" />
 	<link rel="apple-touch-icon" href="./assets/img/icons/icon-152x152.png">
@@ -37,13 +37,13 @@
 	<meta property="twitter:description" content="" />
 
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://www.turtlecoin.lol/" />
-	<meta property="og:image" content="https://wallet.turtlecoin.lol/images/icons/icon-144x144.png" />
+	<meta property="og:url" content="https://mrdigicoin.eu/wallet/" />
+	<meta property="og:image" content="./assets/img/icons/icon-144x144.png" />
 
 	<meta property="twitter:card" content="summary" />
-	<meta property="twitter:site" content="https://www.turtlecoin.lol/" />
+	<meta property="twitter:site" content="https://mrdigicoin.eu/wallet/" />
 
-	<meta property="twitter:creator" content="@plenteum" />
+	<meta property="twitter:creator" content="@mrdigicoin" />
 
 </head>
 <body class="menuHidden menuDisabled">
@@ -58,7 +58,6 @@
         <a href="#!receive" class="onlyWhenConnected"><span class="icon"><i class="fa fa-level-down" aria-hidden="true"></i></span> {{ $t("menu.receive") }}</a>
         <a href="#!export" class="onlyWhenConnected"><span class="icon"><i class="fa fa-download" aria-hidden="true"></i></span> {{ $t("menu.export") }}</a>
         <a href="#!settings" class="onlyWhenConnected"><span class="icon"><i class="fa fa-cog" aria-hidden="true"></i></span> {{ $t("menu.settings") }}</a>
-        <a href="#!donate"><span class="icon"><i class="fa fa-heart" aria-hidden="true"></i></span> {{ $t("menu.donate") }}</a>
         <a href="#!disconnect" class="onlyWhenConnected"><span class="icon"><i class="fa fa-cog" aria-hidden="true"></i></span> {{ $t("menu.disconnect") }}</a>
         <a href="#!network"><span class="icon"><i class="fa fa-pie-chart" aria-hidden="true"></i></span> {{ $t("menu.network") }}</a>
         <a href="#!mining" class="hideOnNative"><span class="icon"><i class="fa fa-institution" aria-hidden="true"></i></span> {{ $t("menu.mining") }}</a>
@@ -69,7 +68,7 @@
     </div>
     <div id="page"></div>
     <div id="copyright" v-cloak="" class="hideOnNative">
-        <div>© 2018 www.turtlecoin.lol</div>
+        <div>© 2018 www.mrdigicoin.eu</div>
         <div class="right">
             <select v-model="language">
                 <option value="en">English</option>
@@ -81,10 +80,8 @@
             </select>
             <a href="#!termsOfUse">{{ $t("bottom.termsOfUse") }}</a>
             <a href="#!support">{{ $t("bottom.support") }}</a>
-            <a href="#!donate">{{ $t("bottom.donate") }}</a>
             <a href="#!network">{{ $t("bottom.network") }}</a>
-            <a href="https://plenteum.virtopia.com" target="_blank">{{ $t("bottom.miningPool") }}</a>
-            <a href="https://github.com/turtlecoin/turtlecoin-webwallet-js" target="_blank">{{ $t("bottom.github") }}</a>
+            <a href="https://github.com/AryaCoin/aryacoin-webwallet-js" target="_blank">{{ $t("bottom.github") }}</a>
         </div>
         <div class="cb"></div>
     </div>
