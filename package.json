@@ -1,7 +1,7 @@
 {
-  "name": "TurtleCoinWebWallet",
+  "name": "AryaCoinWebWallet",
   "version": "1.0.0",
-  "description": "Fully client side web wallet for TurtleCoin",
+  "description": "Fully client side web wallet for AryaCoin",
   "main": "index.js",
   "dependencies": {
     "localforage": "^1.7.2",
@@ -11,12 +11,12 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/turtlecoin/turtlecoin-webwallet-js.git"
+    "url": "git+https://github.com/Aryacoin/aryacoin-webwallet-js.git"
   },
-  "author": "gnock & TurtleCoin",
+  "author": "Sillyghost",
   "license": "BSD-3",
   "bugs": {
-    "url": "https://github.com/turtlecoin/turtlecoin-webwallet-jsissues"
+    "url": "https://github.com/Aryacoin/aryacoin-webwallet-js"
   },
-  "homepage": "https://github.com/turtlecoin/turtlecoin-webwallet-js#readme"
+  "homepage": "https://github.com/Aryacoin/aryacoin-webwallet-js#readme"
 }
