@@ -224,7 +224,7 @@ class SendView extends DestructableView {
             let amount = parseFloat(self.amountToSend);
             if (self.destinationAddress !== null) {
                 //todo use BigInteger
-                if (amount * Math.pow(10, 10) > wallet.unlockedAmount(blockchainHeight)) {
+                if (amount * Math.pow(10, config.coinUnitPlaces) > wallet.unlockedAmount(blockchainHeight)) {
                     swal({
                         type: 'error',
                         title: i18n.t('sendPage.notEnoughMoneyModal.title'),
