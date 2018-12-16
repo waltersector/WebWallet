@@ -63,7 +63,7 @@
 	},
 	"homepage": {
 	  "mainTitle": "Secured AryaCoin Wallet",
-	  "tagLine": "The simplest way to use TurtleCoin - anywhere and any time",
+	  "tagLine": "The simplest way to use AryaCoin - anywhere and any time",
 	  "actions": {
 		"loadWallet": "Load my wallet",
 		"importWallet": "Import a wallet",
@@ -142,7 +142,7 @@
 	  },
 	  "finalizationStep":{
 		"title":"That was simple. Your account is ready!",
-		"subtitle":"Be ready to use TurtleCoin like you never have",
+		"subtitle":"Be ready to use AryaCoin like you never have",
 		"passwordSelectionBlock":{
 		  "label":"Protect your wallet"
 		},
@@ -166,7 +166,7 @@
 	  },
 	  "disclaimerBlock":{
 		"title":"Risk of Using AryaCoinWallet",
-		"content":"TAryaCoinWallet is a web-based interface. It helps you use TurtleCoin without running a full AryaCoin node. <br/>We recommend you treat TurtleCoinWallet like you will treat your actual wallet."
+		"content":"AryaCoinWallet is a web-based interface. It helps you use AryaCoin without running a full AryaCoin node. <br/>We recommend you treat AryaCoinWallet like you will treat your actual wallet."
 	  }
 	},
 	"donatePage":{
@@ -202,7 +202,7 @@
 	  }
 	},
 	"sendPage":{
-	  "title":"Send TRTL",
+	  "title":"Send AYA",
 	  "sendBlock":{
 		"address":{
 		  "label":"Destination address",
@@ -232,7 +232,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Thank you for your donation!",
-		"content":"Your help is appreciated. <br/>This donation will help make TurtleCoin better",
+		"content":"Your help is appreciated. <br/>This donation will help make AryaCoin better",
 		"confirmText":"OK"
 	  },
 	  "transferSentModal":{
@@ -297,7 +297,7 @@
 	},
 	"miningPage":{
 	  "title":"Mining information",
-	  "subtitle":"Support the network by mining and be rewarded with TRTL",
+	  "subtitle":"Support the network by mining and be rewarded with AYA",
     "contentBlock": {
       "title": "How to get started mining",
       "intro": "Mining helps decentralise the network and allows you to earn AryaCoin. There is no need for specialist equipment to mine AryaCoin.",
