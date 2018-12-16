@@ -1,6 +1,6 @@
 let global : any = typeof window !== 'undefined' ? window : self;
 global.config = {
-    apiUrl: typeof window !== 'undefined' && window.location ? window.location.href.substr(0, window.location.href.lastIndexOf('/') + 1) + 'api/' : 'http://mrdigicoin.eu/wallet/api/',
+    apiUrl: typeof window !== 'undefined' && window.location ? window.location.href.substr(0, window.location.href.lastIndexOf('/') + 1) + 'api/' : '',
     mainnetExplorerUrl: "http://mrdigicoin.eu/explorer/",
     testnetExplorerUrl: "http://mrdigicoin.eu/explorer/",
     testnet: false,
