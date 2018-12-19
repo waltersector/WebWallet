@@ -13,9 +13,9 @@ global.config = {
     integratedAddressPrefixTestnet: 0,
     subAddressPrefix: 0,
     subAddressPrefixTestnet: 0,
-    feePerKB: new JSBigInt('100'),//20^10 - for testnet its not used, as fee is dynamic.
+    feePerKB: new JSBigInt('5'),//20^10 - for testnet its not used, as fee is dynamic.
     dustThreshold: new JSBigInt('1'),//10^10 used for choosing outputs/change - we decompose all the way down if the receiver wants now regardless of threshold
-    defaultMixin: 2, // default value mixin
+    defaultMixin: 7, // default value mixin
     idleTimeout: 30,
     idleWarningDuration: 20,
 
