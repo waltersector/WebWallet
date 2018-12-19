@@ -23,6 +23,6 @@ global.config = {
     openAliasPrefix: "aya",
     coinName: 'AryaCoin',
     coinUriPrefix: 'aryacoin:',
-    avgBlockTime: 300,
+    avgBlockTime: 30,
     maxBlockNumber: 500000000,
 };
