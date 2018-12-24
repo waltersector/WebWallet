@@ -3,7 +3,7 @@ Step 1: Install the Dot Net Core SDK
 Follow these instructions to instal dotnetcore sdk with package manager:
 https://www.microsoft.com/net/download/linux-package-manager/ubuntu16-04/sdk-2.1.402
 
-Step 2: git clone your repo
+Step 2: git clone the repo OR Unzip the zip files
 
 open Program.cs in the root of the cloned repo and remove the below lines:
 
