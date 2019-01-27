@@ -1,13 +1,13 @@
 let global : any = typeof window !== 'undefined' ? window : self;
 global.config = {
     apiUrl: typeof window !== 'undefined' && window.location ? window.location.href.substr(0, window.location.href.lastIndexOf('/') + 1) + 'api/' : '',
-    mainnetExplorerUrl: "127.0.0.1",
-    testnetExplorerUrl: "http://mrdigicoin.eu/explorer/",
+    mainnetExplorerUrl: "http://bitrial.vip/Block-Explorer",
+    testnetExplorerUrl: "",
     testnet: false,
-    coinUnitPlaces: 4,
-    txMinConfirms: 10,         // corresponds to CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE in Monero
-    txCoinbaseMinConfirms: 120, // corresponds to CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW in Monero
-    addressPrefix: 0x1b40c8,
+    coinUnitPlaces: 2,
+    txMinConfirms: 40,         // corresponds to CRYPTONOTE_DEFAULT_TX_SPENDABLE_AGE in Monero
+    txCoinbaseMinConfirms: 60, // corresponds to CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW in Monero
+    addressPrefix: 20304,
     integratedAddressPrefix: 0,
     addressPrefixTestnet: 0,
     integratedAddressPrefixTestnet: 0,
@@ -19,10 +19,10 @@ global.config = {
     idleTimeout: 30,
     idleWarningDuration: 20,
 
-    coinSymbol: 'AYA',
-    openAliasPrefix: "aya",
-    coinName: 'AryaCoin',
-    coinUriPrefix: 'aryacoin:',
+    coinSymbol: 'BTR',
+    openAliasPrefix: "btr",
+    coinName: 'Bitrial',
+    coinUriPrefix: 'bitrial:',
     avgBlockTime: 30,
     maxBlockNumber: 500000000,
 };
