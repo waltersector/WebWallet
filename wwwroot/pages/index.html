@@ -2,15 +2,15 @@
 	<div class="hideOnNonNative" >
 		<div class="mainBlock" >
 			<div class="actions" >
-				<img src="./assets/img/logo_white.png" alt="AryaCoin"/>
+				<img src="./assets/img/logo_white.png" alt="Bitrial"/>
 			</div>
 			<div class="headline" >
 				<h1>{{ $t("homepage.mainTitle") }}</h1>
 				<h2>{{ $t("homepage.tagLine") }}</h2>
 			</div>
 			<div class="callToAction tc" >
-				<a href="#" @click="loadWallet()" v-if="hasLocalWallet" class="btn primary">{{ $t("homepage.actions.loadWallet") }}</a>
-				<a href="#!createWallet" class="btn primary" v-if="!hasLocalWallet" >{{ $t("homepage.actions.createWallet") }}</a>
+				<a href="#" @click="loadWallet()" v-if="hasLocalWallet" class="btn basic">{{ $t("homepage.actions.loadWallet") }}</a>
+				<a href="#!createWallet" class="btn basic" v-if="!hasLocalWallet" >{{ $t("homepage.actions.createWallet") }}</a>
 				<a href="#!import" class="btn mini" v-if="!hasLocalWallet" >{{ $t("homepage.actions.importWallet") }}</a>
 			</div>
 		</div>
@@ -18,7 +18,7 @@
 	<div class="hideOnNative" >
 		<div class="mainBlock" >
 			<div class="actions" >
-				<img src="./assets/img/logo_white.png" alt="AryaCoin"/>
+				<img src="./assets/img/logo_white.png" alt="Bitrial"/>
 				<div class="right">
 					<a href="#" @click="loadWallet()" v-if="hasLocalWallet" class="btn mini basic">{{ $t("homepage.actions.loadWallet") }}</a>
 					<a href="#!import" class="btn mini">{{ $t("homepage.actions.importWallet") }}</a>
@@ -31,7 +31,7 @@
 			</div>
 			<div class="callToAction tc" >
 				<a href="#" @click="loadWallet()" v-if="hasLocalWallet" class="btn basic">{{ $t("homepage.actions.loadWallet") }}</a>
-				<a href="#!createWallet" class="btn primary" >{{ $t("homepage.actions.createWallet") }}</a>
+				<a href="#!createWallet" class="btn basic" >{{ $t("homepage.actions.createWallet") }}</a>
 			</div>
 		</div>
 
@@ -62,7 +62,7 @@
 					<div class="block">
 						<i class="fa fa-folder-open-o" aria-hidden="true"></i><br/>
 						<h3>{{ $t("homepage.notes.openSource.title") }}</h3>
-						<a href="https://github.com/AryaCoin/aryacoin-webwallet-js" target="_blank" rel="nofollow"><h4>{{ $t("homepage.notes.openSource.description") }}</h4></a>
+						<a href="" target="_blank" rel="nofollow"><h4>{{ $t("homepage.notes.openSource.description") }}</h4></a>
 					</div>
 				</div>
 			</div>
