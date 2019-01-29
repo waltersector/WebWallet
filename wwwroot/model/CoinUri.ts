@@ -16,8 +16,8 @@
 
 export class CoinUri{
 
-	static coinTxPrefix = 'aryacoin:';
-	static coinWalletPrefix = 'aryacoin:';
+	static coinTxPrefix = 'bitrial:';
+	static coinWalletPrefix = 'bitrial:';
 	static coinAddressLength = 98;
 
 	static decodeTx(str : string) : {
