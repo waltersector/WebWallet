@@ -149,7 +149,7 @@ export class WalletRepository{
 		let doc = new jsPDF('landscape');
 
         // background color
-        doc.setFillColor(0, 132, 61);
+        doc.setFillColor(60, 0, 0);
         doc.rect(0, 0, 297, 210, "F");
 
         
@@ -166,7 +166,7 @@ export class WalletRepository{
 
         // BOX 1 [x = 5, y = 10]
         doc.setFillColor(255, 255, 255);
-        doc.setDrawColor(0, 132, 61);
+        doc.setDrawColor(60, 0, 0);
         doc.rect(5, 5, 90, 90, "F");
         doc.setFillColor(0, 132, 61);
         doc.rect(5, 75, 90, 15, "F");
@@ -184,7 +184,7 @@ export class WalletRepository{
 
         // BOX 2 - [x = 104, y = 10]
         doc.setFillColor(255, 255, 255);
-        doc.setDrawColor(0, 132, 61);
+        doc.setDrawColor(60, 0, 0);
         doc.rect(104, 5, 90, 90, "F");
         doc.setFillColor(0, 132, 61);
         doc.rect(104, 75, 90, 15, "F");
@@ -202,7 +202,7 @@ export class WalletRepository{
 
         // BOX 3 - [x = 203, y = 10]
         doc.setFillColor(255, 255, 255);
-        doc.setDrawColor(0, 132, 61);
+        doc.setDrawColor(60, 0, 0);
         doc.rect(203, 5, 90, 90, "F");
         doc.setFillColor(0, 132, 61);
         doc.rect(203, 75, 90, 15, "F");
@@ -242,7 +242,7 @@ export class WalletRepository{
         }
         // BOX 4 - [x = 0, y = 100]
         doc.setFillColor(255, 255, 255);
-        doc.setDrawColor(0, 132, 61);
+        doc.setDrawColor(60, 0, 0);;
         doc.rect(5, 115, 90, 90, "F");
         doc.setFillColor(0, 132, 61);
         doc.rect(5, 120, 90, 15, "F");
@@ -260,15 +260,15 @@ export class WalletRepository{
 
 
         // BOX 5 - [x = 104, y = 110]
-        doc.setFillColor(0, 132, 61);
+        doc.setFillColor(60, 0, 0);
         doc.roundedRect(104, 115, 89, 85, 2, 2, 'F');
         doc.setFontSize(10)
         doc.setTextColor(255, 255, 255)
         doc.text(108, 125, 'To deposit funds to this paper wallet, send the');
-        doc.text(108, 130, 'AryaCoin (AYA) coins to the public address.');
+        doc.text(108, 130, 'Bitrial (BTR) coins to the public address.');
         doc.text(108, 150, 'DO NOT REVEAL THE PRIVATE SPEND KEY.');
         doc.text(108, 165, 'Until you are ready to import the balance from this');
-        doc.text(108, 170, 'wallet to your AryaCoin wallet, a cryptocurrency');
+        doc.text(108, 170, 'wallet to your Bitrial wallet, a cryptocurrency');
         doc.text(108, 175, 'client, or exchange.');
         doc.text(108, 185, 'Amount:');
         doc.setDrawColor(255, 255, 255);
