@@ -38,7 +38,7 @@
 
 					<div class="field" >
 						<label>{{ $t("sendPage.sendBlock.amount.label") }}</label>
-						<input class="amountInput" type="text" v-model="amountToSend" placeholder="10.5 AYA" :readonly="lockedForm"/>
+						<input class="amountInput" type="text" v-model="amountToSend" placeholder="10.5 btr" :readonly="lockedForm"/>
 						<div v-if="!amountToSendValid && amountToSend != ''" class="message error">
 							{{ $t("sendPage.sendBlock.amount.invalid") }}
 						</div>
@@ -53,7 +53,7 @@
 					</div>
 
 					<div class="actions tc">
-						<button type="button" class="btn primary" @click="send()" :disabled="!destinationAddressValid || !amountToSendValid" >{{ $t("sendPage.sendBlock.sendButton") }}</button>
+						<button type="button" class="btn basic" @click="send()" :disabled="!destinationAddressValid || !amountToSendValid" >{{ $t("sendPage.sendBlock.sendButton") }}</button>
 					</div>
 					<div class="actions tc" v-if="lockedForm" >
 						<button type="button" class="btn small" @click="reset()" >{{ $t("sendPage.sendBlock.cancelButton") }}</button>
