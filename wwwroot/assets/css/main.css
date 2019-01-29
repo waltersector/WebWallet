@@ -193,7 +193,7 @@ body.menuHidden #page,body.menuDisabled #page{
 #copyright{
 	text-align: left;
 	padding:30px 0;
-	color: #474E5D;
+	color: #000000;
 	font-size: 14px;
 	padding-left:10px;
 	margin-left:280px;
@@ -212,7 +212,7 @@ body.transparent #copyright{
 }
 
 
-#copyright a{color: #474E5D;text-decoration: none;}
+#copyright a{color: #000000;text-decoration: none;}
 #copyright .right{
 	float:right;
 }
@@ -716,7 +716,7 @@ body{
 }
 .body-header .header-title {
 	font-size: 26px;
-	color: #474E5D;
+	color: #000000;
 	line-height: 1;
 	margin-bottom: 15px;
 }
@@ -726,12 +726,12 @@ body{
 }
 .body-header .header-subtitle {
 	font-size: 14px;
-	color: #474E5D;
+	color: #000000;
 	line-height: 26px;
 }
 .body-header .header-subtitle a {
 	font-size: 14px;
-	color: #474E5D;
+	color: #000000;
 	line-height: 1;
 }
 
@@ -753,7 +753,7 @@ body{
 }
 .panel a{
 	text-decoration: none;
-	color:#474E5D;
+	color:#000000;
 }
 .panel.inline {
 	background: transparent;
@@ -764,7 +764,7 @@ body{
 .panel .body{}
 .panel .header-title{
 	font-size: 20px;
-	color: #474E5D;
+	color: #000000;
 	margin-bottom: 22px;
 }
 .panel.nopadding .header-title{
