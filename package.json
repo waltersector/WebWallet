@@ -1,7 +1,7 @@
 {
-  "name": "AryaCoinWebWallet",
+  "name": "BitrialWebWallet",
   "version": "1.0.0",
-  "description": "Fully client side web wallet for AryaCoin",
+  "description": "Fully client side web wallet for Bitrial",
   "main": "index.js",
   "dependencies": {
     "localforage": "^1.7.2",
@@ -10,13 +10,13 @@
   },
   "devDependencies": {},
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Aryacoin/aryacoin-webwallet-js.git"
+    "type": "",
+    "url": ""
   },
-  "author": "Sillyghost",
-  "license": "BSD-3",
+  "author": "",
+  "license": "",
   "bugs": {
-    "url": "https://github.com/Aryacoin/aryacoin-webwallet-js"
+    "url": ""
   },
-  "homepage": "https://github.com/Aryacoin/aryacoin-webwallet-js#readme"
+  "homepage": ""
 }
